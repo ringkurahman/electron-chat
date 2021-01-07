@@ -1,5 +1,4 @@
-const { app, BrowserWindow, Notification } = require('electron')
-
+const { app, BrowserWindow } = require('electron')
 
 
 function createWindow() {
@@ -8,7 +7,9 @@ function createWindow() {
         height: 600,
         backgroundColor: 'white',
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: false,
+            worldSafeExecuteJavaScript: true,
+            contextIsolation: true
         }
     })
 
@@ -18,15 +19,7 @@ function createWindow() {
 
 
 app.whenReady()
-    .then(() => {
-        createWindow()
-        const notification = new Notification({
-            title: 'Hello World',
-            body: 'My test message'
-        })
-
-        notification.show()
-    })
+    .then(createWindow)
 
 
 app.on('window-all-closed', () => {
