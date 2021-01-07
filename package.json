@@ -1,0 +1,14 @@
+{
+  "name": "electronchat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Ringku Rahman",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^11.1.1"
+  }
+}
