@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
 import JoinChats from '../components/JoinChats'
 import AvailableChats from '../components/AvailableChats'
 import Container from '../components/shared/Container'
@@ -7,8 +6,6 @@ import Container from '../components/shared/Container'
 
 const Home = () => {
     return (
-    <div className='content-wrapper'>
-      <Navbar />
       <div className="row no-gutters fh">
         <div className="col-3 fh">
           <JoinChats />
@@ -20,7 +17,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 
