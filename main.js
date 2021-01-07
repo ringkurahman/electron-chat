@@ -1,6 +1,7 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, Notification } = require('electron')
 const path = require('path')
 const isDev = !app.isPackaged
+
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -8,9 +9,9 @@ function createWindow() {
         height: 600,
         backgroundColor: 'white',
         webPreferences: {
-            nodeIntegration: false,
-            worldSafeExecuteJavaScript: true,
-            contextIsolation: true
+            nodeIntegration: true,
+            // worldSafeExecuteJavaScript: true,
+            // contextIsolation: true
         }
     })
 
@@ -28,6 +29,14 @@ if (isDev) {
 
 app.whenReady()
     .then(createWindow)
+
+
+ipcMain.on('notify', (_, message) => {
+    new Notification({
+        title: 'Notification',
+        body: message
+    }).show()
+})
 
 
 app.on('window-all-closed', () => {
