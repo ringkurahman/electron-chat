@@ -9,9 +9,10 @@ function createWindow() {
         height: 600,
         backgroundColor: 'white',
         webPreferences: {
-            nodeIntegration: true,
-            // worldSafeExecuteJavaScript: true,
-            // contextIsolation: true
+            nodeIntegration: false,
+            worldSafeExecuteJavaScript: true,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
         }
     })
 
@@ -36,6 +37,11 @@ ipcMain.on('notify', (_, message) => {
         title: 'Notification',
         body: message
     }).show()
+})
+
+
+ipcMain.on('app-quit', () => {
+    app.quit()
 })
 
 
