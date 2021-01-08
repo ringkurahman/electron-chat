@@ -1,10 +1,13 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
+
 
 
 const Navbar = () => {
 
   const history = useHistory()
+  const message = useSelector(state => state.message)
 
     return (
         <div className="chat-navbar">
@@ -17,6 +20,7 @@ const Navbar = () => {
             <Link to="/settings"
               className="btn btn-sm btn-outline-success ml-2">Settings
               </Link>
+            { message }
           </div>
           <div className="chat-navbar-inner-right">
             <span className="logged-in-user">Hi User</span>
