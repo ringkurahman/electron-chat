@@ -1,23 +1,36 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 
 const Navbar = () => {
+
+  const history = useHistory()
+
     return (
         <div className="chat-navbar">
         <nav className="chat-navbar-inner">
           <div className="chat-navbar-inner-left">
-            <Link to="/settings" className="btn btn-outline-success ml-2">Settings</Link>
+            <button
+              className="btn btn-sm btn-outline-primary"
+              onClick={() => history.goBack()}>Back
+            </button>
+            <Link to="/settings"
+              className="btn btn-sm btn-outline-success ml-2">Settings
+              </Link>
           </div>
           <div className="chat-navbar-inner-right">
             <span className="logged-in-user">Hi User</span>
-            <span><Link
-              to="/register"
-              className="btn btn-sm btn-outline-danger ml-2">Register</Link></span>
             <span>
               <Link
-              to="/login"
-              className="btn btn-sm btn-outline-success ml-2">Login</Link>
+                to="/register"
+                className="btn btn-sm btn-outline-danger ml-2">Register
+              </Link>
+            </span>
+            <span>
+              <Link
+                to="/login"
+                className="btn btn-sm btn-outline-success ml-2">Login
+              </Link>
             </span>
           </div>
         </nav>

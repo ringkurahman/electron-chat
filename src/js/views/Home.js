@@ -1,19 +1,20 @@
 import React from 'react'
-import JoinChats from '../components/JoinChats'
-import AvailableChats from '../components/AvailableChats'
-import Container from '../components/shared/Container'
+import JoinChatsList from '../components/JoinChatsList'
+import AvailableChatsList from '../components/AvailableChatsList'
+import TitleContainer from '../components/shared/TitleContainer'
 
 
 const Home = () => {
+
     return (
       <div className="row no-gutters fh">
         <div className="col-3 fh">
-          <JoinChats />
+          <JoinChatsList />
         </div>
         <div className="col-9 fh">
-          <Container />
+          <TitleContainer text="Choose Your Channel" />
           <div className="container-fluid">
-            <AvailableChats />
+            <AvailableChatsList />
           </div>
         </div>
       </div>
