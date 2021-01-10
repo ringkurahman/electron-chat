@@ -2,9 +2,22 @@ import * as api from '../api/auth'
 
 
 // Register new user
-export const registerUser = formData => dispatch =>
-    api.register(formData)
-        .then(_ => dispatch({ type: 'AUTH_REGISTER_SUCCESS' }))
+export const registerUser = formData => dispatch => {
+    dispatch({ type: 'AUTH_REGISTER_INIT' })
+    return api.register(formData)
+        .then(user => dispatch({ type: 'AUTH_REGISTER_SUCCESS', user }))
+        .catch(error => dispatch({ type: 'AUTH_REGISTER_ERROR', error }))
+}
+
+
+// Login with email and password
+export const loginUser = formData => dispatch => {
+    dispatch({ type: 'AUTH_LOGIN_INIT' })
+    return api.login(formData)
+        .then(user=> dispatch({ type: 'AUTH_LOGIN_SUCCESS', user }))
+        .catch(error => dispatch({ type: 'AUTH_LOGIN_ERROR', error }))
+}
+
 
 
 // Logout user
@@ -13,18 +26,14 @@ export const logout = () => dispatch =>
         .then(_ => dispatch({ type: 'AUTH_LOGOUT_SUCCESS' }))
 
 
-// Login with email and password
-export const loginUser = formData => dispatch =>
-    api.login(formData)
-        .then(_ => dispatch({ type: 'AUTH_LOGIN_SUCCESS' }))
-
 
 // Get logged in user
 export const listenToAuthChanged = () => dispatch => {
     dispatch({ type: 'AUTH_ON_INIT'})
-    api.onAuthStateChanges(authUser => {
+    return api.onAuthStateChanges(async authUser => {
         if (authUser) {
-            dispatch({ type: 'AUTH_ON_SUCCESS', user: authUser })
+            const userProfile = await api.getUserProfile(authUser.uid)
+            dispatch({ type: 'AUTH_ON_SUCCESS', user: userProfile })
             
         } else {
             dispatch({ type: 'AUTH_ON_ERROR'})

@@ -33,6 +33,13 @@ html, body {
   height: 100%;
 }
 
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
 .content-wrapper {
   height: 100%;
   background-color: $gray-200;

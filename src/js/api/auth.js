@@ -12,11 +12,23 @@ const createUserProfile = userProfile =>
         .set(userProfile)
 
 
+// Get user profile
+export const getUserProfile = uid => 
+    db
+        .collection('profiles')
+        .doc(uid)
+        .get()
+        .then(snapshot => snapshot.data())
+
+
+
 // Register new user
 export async function register({ email, password, username, avatar }) {
     try {
         const { user } = await firebase.auth().createUserWithEmailAndPassword(email, password)
-        await createUserProfile({ uid: user.uid, username, email, avatar, joinedChats: []})
+        const userProfile = { uid: user.uid, username, email, avatar, joinedChats: []}
+        await createUserProfile(userProfile)
+        return userProfile
 
     } catch (error) {
         return Promise.reject(error.message)
@@ -25,7 +37,12 @@ export async function register({ email, password, username, avatar }) {
 
 
 // Login user
-export const login = ({ email, password }) => firebase.auth().signInWithEmailAndPassword(email, password)
+export const login = async ({ email, password }) => {
+    const { user } = await firebase.auth().signInWithEmailAndPassword(email, password)
+    const userProfile = await getUserProfile(user.uid)
+    return userProfile
+}
+    
 
 
 // Logout user

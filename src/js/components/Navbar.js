@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { logout } from '../actions/authActions'
+import BackButton from '../components/shared/BackButton'
 
 
 
-const Navbar = () => {
+const Navbar = ({ canGoBack, view }) => {
 
-  const history = useHistory()
   const dispatch = useDispatch()
   const user = useSelector(state => state.auth.user)
 
@@ -16,28 +16,27 @@ const Navbar = () => {
       <div className="chat-navbar">
         <nav className="chat-navbar-inner">
           <div className="chat-navbar-inner-left">
-            <button
-              className="btn btn-sm btn-outline-primary"
-              onClick={() => history.goBack()}>Back
-            </button>
-            <Link to="/settings"
-              className="btn btn-sm btn-outline-success ml-2">Settings
+            {
+              canGoBack && <BackButton />
+            }
+            { view !== 'Settings' &&
+              <Link
+                to="/settings"
+                className="btn btn-outline-success ml-2">Settings
               </Link>
+            }
           </div>
           <div className="chat-navbar-inner-right">
-            <span className="logged-in-user">Hi User</span>
             {
-              user ?
-                <button
-                  onClick={() => dispatch(logout())}
-                  className="btn btn-sm btn-outline-danger ml-2">Logout
-                </button> :
-                <span>
-                  <Link
-                    to="/"
-                    className="btn btn-sm btn-outline-success ml-2">Login
-                  </Link>
-                </span>
+              user &&
+                <>
+                  <img className='avatar mr-2' src={ user.avatar } alt={ user.username} />
+                  <span className="logged-in-user">Hi, { user.username }</span>
+                  <button
+                    onClick={() => dispatch(logout())}
+                    className="btn btn-sm btn-outline-danger ml-4">Logout
+                  </button>
+                </>
             }
           </div>
         </nav>

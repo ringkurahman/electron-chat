@@ -2,18 +2,21 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 // import { composeWithDevTools } from 'redux-devtools-extension'
 import chatReducers from '../reducers/chatReducers'
-import authReducers from '../reducers/authReducers'
+import createAuthReducer from '../reducers/authReducers'
+import createAppStatusReducer from '../reducers/appStatusReducers'
+import appMiddleware from '../middlewares/appStatusMiddlewares'
 
 
 
 export default function configureStore() {
 
-    const middleware = [thunk]
+    const middleware = [thunk, appMiddleware]
 
     const store = createStore(
         combineReducers({
             chats: chatReducers,
-            auth: authReducers,
+            auth: createAuthReducer,
+            app: createAppStatusReducer
         }), applyMiddleware(...middleware))
 
     return store

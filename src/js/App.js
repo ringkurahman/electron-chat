@@ -1,46 +1,66 @@
 import React, { useEffect } from 'react'
-import { Provider } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import HomeView from './views/Home'
-import NavbarView from './components/Navbar'
 import SettingsView from './views/Settings'
 import WelcomeView from './views/Welcome'
 import ChatView from './views/Chat'
-import configureStore from './store/index'
+import LoadingView from './components/shared/LoadingView'
 import { listenToAuthChanged } from './actions/authActions'
+import { listenToConnectionChanges } from './actions/appStatusAction'
+import StoreProvider from './store/StoreProvider'
+import PrivateRoute from './components/PrivateRoute'
 
 
-const store = configureStore()
+const ChatApp = () => {
+
+    const dispatch = useDispatch()
+    const isChecking = useSelector(({ auth }) => auth.isChecking)
+    const isOnline = useSelector(({app}) => app.isOnline)
+
+    useEffect(() => {
+      
+        const unsubFromAuth = dispatch(listenToAuthChanged())
+        const unsubFromConnection = dispatch(listenToConnectionChanges())
+
+        return () => {
+        unsubFromAuth()
+        unsubFromConnection()
+        }
+  }, [dispatch])
+
+    if (isChecking) {
+        return <LoadingView />
+    }
+
+    return (
+        <Router>
+            <div className='content-wrapper'>
+                <Switch>
+                    <Route exact path="/">
+                        <WelcomeView />
+                    </Route>
+                    <PrivateRoute path="/home">
+                        <HomeView />
+                    </PrivateRoute>
+                    <PrivateRoute path="/settings">
+                        <SettingsView />
+                    </PrivateRoute>
+                    <PrivateRoute path="/chat/:id">
+                        <ChatView />
+                    </PrivateRoute>
+                </Switch>
+            </div>
+        </Router>
+    )
+}
 
 
 const App = () => {
-
-    useEffect(() => {
-        store.dispatch(listenToAuthChanged())
-    }, [])
-
     return (
-        <Provider store={store}>
-            <Router>
-                <NavbarView />
-                <div className='content-wrapper'>
-                    <Switch>
-                        <Route exact path="/">
-                            <WelcomeView />
-                        </Route>
-                        <Route path="/home">
-                            <HomeView />
-                        </Route>
-                        <Route path="/settings">
-                            <SettingsView />
-                        </Route>
-                        <Route path="/chat/:id">
-                            <ChatView />
-                        </Route>
-                    </Switch>
-                </div>
-            </Router>
-        </Provider>
+        <StoreProvider>
+            <ChatApp />
+        </StoreProvider>
     )
 }
 
