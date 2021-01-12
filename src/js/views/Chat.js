@@ -79,7 +79,7 @@ const Chat = () => {
             <ChatUsersList users={activeChat?.joinedUsers} />
           </div>
           <div className="col-9 fh">
-            <TitleContainer text={`Channel ${activeChat?.name}`} />
+            <TitleContainer text={`Channel: ${activeChat?.name}`} />
           <ChatMessagesList
           innerRef={messageList}
           messages={messages} />
