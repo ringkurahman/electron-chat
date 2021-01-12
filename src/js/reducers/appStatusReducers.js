@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 
 
 
-function createAppStatusReducer() {
+function createAppReducer() {
   const { onLine } = navigator
 
   const isOnline = (state = onLine, action) => {
@@ -21,4 +21,4 @@ function createAppStatusReducer() {
   })
 }
 
-export default createAppStatusReducer()
+export default createAppReducer()

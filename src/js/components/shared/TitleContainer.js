@@ -1,11 +1,12 @@
 import React from 'react'
 
 
-const TitleContainer = ({ text }) => {
+const TitleContainer = ({ text, children }) => {
 
     return (
-        <div className="chat-name-container">
-            <span className="name">{ text }</span>
+        <div className="chat-name-container align-items-center">
+            <span className="name">{text}</span>
+            <div>{ children }</div>
         </div>
     )
 }
