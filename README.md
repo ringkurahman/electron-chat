@@ -16,10 +16,13 @@ npm install
 ## Run App
 ```
 # Run in dev mode
+npm run watch
 npm start
 
 # Run in production mode
-npm start
+npm run build
+npm run make:macos
+npm run make:win
 ```
 
 - Version: 1.0.0
