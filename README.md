@@ -3,7 +3,7 @@
 
 ## Frontend:
 
-Electron js, React js, React-router-dom, Redux, React-redux, Redux-toolkit, Firebase, Sass, Moment js, React-hook-form,  Redux-devtools-extension, Redux-logger, Redux-thunk, bootstrap, Google fonts and more.
+Electron js, React js, React-router-dom, Redux, React-redux, Redux-toolkit, Firebase, Sass, Moment js, React-hook-form,  Redux-devtools-extension, Redux-logger, Redux-thunk, bootstrap, Google fonts and more
 
 ## Backend:
 Firestore 
